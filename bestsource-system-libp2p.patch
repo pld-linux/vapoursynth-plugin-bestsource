@@ -1,0 +1,63 @@
+--- bestsource-d917b26767c41851c50ccad29d8d126e139a7822/meson.build.orig	2023-04-19 19:03:30.000000000 +0200
++++ bestsource-d917b26767c41851c50ccad29d8d126e139a7822/meson.build	2023-04-25 17:23:34.687680051 +0200
+@@ -3,8 +3,6 @@ project('BestSource', 'cpp',
+     meson_version: '>=0.48.0'
+ )
+ 
+-libs = []
+-
+ sources = [
+     'src/audiosource.cpp',
+     'src/videosource.cpp',
+@@ -19,26 +17,7 @@ if host_machine.cpu_family().startswith(
+     p2p_args += ['-DP2P_SIMD']
+ endif
+ 
+-libs += static_library('p2p_main',
+-    [
+-        'libp2p/p2p_api.cpp',
+-        'libp2p/v210.cpp',
+-        'libp2p/simd/cpuinfo_x86.cpp',
+-        'libp2p/simd/p2p_simd.cpp'
+-    ],
+-    include_directories: ['libp2p', 'libp2p/simd'],
+-    cpp_args: p2p_args
+-)
+-
+-if host_machine.cpu_family().startswith('x86')
+-    p2p_args += ['-msse4.1']
+-
+-    libs += static_library('p2p_sse41',
+-        'libp2p/simd/p2p_sse41.cpp',
+-        include_directories: ['libp2p', 'libp2p/simd'],
+-        cpp_args: p2p_args
+-    )
+-endif
++p2p_dep = meson.get_compiler('cpp').find_library('p2p')
+ 
+ vapoursynth_dep = dependency('vapoursynth', version: '>=R55').partial_dependency(compile_args: true, includes: true)
+ jansson_dep = dependency('jansson', version: '>= 2.7', required: true)
+@@ -48,11 +27,11 @@ deps = [
+     jansson_dep,
+     dependency('libavcodec', version: '>=58.18.0'),
+     dependency('libavformat', version: '>=58.12.0'),
++    p2p_dep,
+ ]
+ 
+ shared_module('bestsource', sources,
+     dependencies: deps,
+-    link_with: libs,
+     install: true,
+     install_dir: join_paths(vapoursynth_dep.get_pkgconfig_variable('libdir'), 'vapoursynth'),
+     gnu_symbol_visibility: 'hidden'
+--- bestsource-d917b26767c41851c50ccad29d8d126e139a7822/src/videosource.cpp.orig	2023-04-19 19:03:30.000000000 +0200
++++ bestsource-d917b26767c41851c50ccad29d8d126e139a7822/src/videosource.cpp	2023-04-25 19:05:31.834540622 +0200
+@@ -24,7 +24,7 @@
+ #include <thread>
+ #include <cassert>
+ 
+-#include "../libp2p/p2p_api.h"
++#include <p2p_api.h>
+ 
+ extern "C" {
+ #include <libavformat/avformat.h>

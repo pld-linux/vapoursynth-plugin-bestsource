@@ -1,0 +1,33 @@
+--- bestsource-d917b26767c41851c50ccad29d8d126e139a7822/src/audiosource.cpp.orig	2023-04-19 19:03:30.000000000 +0200
++++ bestsource-d917b26767c41851c50ccad29d8d126e139a7822/src/audiosource.cpp	2023-04-25 19:00:34.719483566 +0200
+@@ -153,7 +153,7 @@ LWAudioDecoder::LWAudioDecoder(const std
+         AP.BytesPerSample = av_get_bytes_per_sample(static_cast<AVSampleFormat>(DecodeFrame->format));
+         AP.BitsPerSample = CodecContext->bits_per_raw_sample ? (CodecContext->bits_per_raw_sample) : (AP.BytesPerSample * 8); // assume all bits are relevant if not specified
+         AP.SampleRate = DecodeFrame->sample_rate;
+-        AP.Channels = DecodeFrame->ch_layout.nb_channels;
++        AP.Channels = DecodeFrame->channels;
+         AP.ChannelLayout = DecodeFrame->channel_layout ? DecodeFrame->channel_layout : av_get_default_channel_layout(DecodeFrame->channels);  
+         AP.NumSamples = (FormatContext->duration * DecodeFrame->sample_rate) / AV_TIME_BASE - FormatContext->streams[TrackNumber]->codecpar->initial_padding;
+         if (DecodeFrame->pts != AV_NOPTS_VALUE)
+@@ -256,16 +256,16 @@ BestAudioSource::CacheBlock::CacheBlock(
+     } else {
+         int BytesPerSample = av_get_bytes_per_sample(static_cast<AVSampleFormat>(Frame->format));
+         LineSize = Length * BytesPerSample;
+-        Storage.resize(LineSize * Frame->ch_layout.nb_channels);
++        Storage.resize(LineSize * Frame->channels);
+ 
+         if (BytesPerSample == 1)
+-            UnpackChannels<uint8_t>(Frame->data[0], Storage.data(), Length, Frame->ch_layout.nb_channels);
++            UnpackChannels<uint8_t>(Frame->data[0], Storage.data(), Length, Frame->channels);
+         else if (BytesPerSample == 2)
+-            UnpackChannels<uint16_t>(Frame->data[0], Storage.data(), Length, Frame->ch_layout.nb_channels);
++            UnpackChannels<uint16_t>(Frame->data[0], Storage.data(), Length, Frame->channels);
+         else if (BytesPerSample == 4)
+-            UnpackChannels<uint32_t>(Frame->data[0], Storage.data(), Length, Frame->ch_layout.nb_channels);
++            UnpackChannels<uint32_t>(Frame->data[0], Storage.data(), Length, Frame->channels);
+         else if (BytesPerSample == 8)
+-            UnpackChannels<uint64_t>(Frame->data[0], Storage.data(), Length, Frame->ch_layout.nb_channels);
++            UnpackChannels<uint64_t>(Frame->data[0], Storage.data(), Length, Frame->channels);
+         av_frame_free(&Frame);
+     }
+ }
