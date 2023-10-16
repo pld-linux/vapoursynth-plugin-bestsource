@@ -5,7 +5,7 @@ Name:		vapoursynth-plugin-bestsource
 Version:	0
 %define	snap	20230419
 %define	gitref	d917b26767c41851c50ccad29d8d126e139a7822
-%define	rel	1
+%define	rel	2
 Release:	0.%{snap}.1
 License:	MIT
 Group:		Libraries
