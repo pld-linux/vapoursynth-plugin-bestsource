@@ -6,7 +6,7 @@ Version:	0
 %define	snap	20230419
 %define	gitref	d917b26767c41851c50ccad29d8d126e139a7822
 %define	rel	2
-Release:	0.%{snap}.1
+Release:	0.%{snap}.%{rel}
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/vapoursynth/bestsource/archive/%{gitref}/bestsource-%{gitref}.tar.gz
