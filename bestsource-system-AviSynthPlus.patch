@@ -1,0 +1,11 @@
+--- bestsource-R4/src/avisynth.cpp.orig	2024-04-25 09:54:57.000000000 +0200
++++ bestsource-R4/src/avisynth.cpp	2024-05-27 21:47:03.609466239 +0200
+@@ -23,7 +23,7 @@
+ #include "bsshared.h"
+ #include "version.h"
+ #include "synthshared.h"
+-#include "../AviSynthPlus/avs_core/include/avisynth.h"
++#include <avisynth/avisynth.h>
+ #include <VSHelper4.h>
+ #include <vector>
+ #include <algorithm>
