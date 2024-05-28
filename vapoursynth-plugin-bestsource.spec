@@ -55,6 +55,8 @@ Summary:	Header files for bestsource library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki bestsource
 Group:		Development/Libraries
 Requires:	bestsource = %{version}-%{release}
+Requires:	ffmpeg-devel >= 6.0
+Requires:	xxHash-devel
 
 %description -n bestsource-devel
 Header files for bestsource library.
