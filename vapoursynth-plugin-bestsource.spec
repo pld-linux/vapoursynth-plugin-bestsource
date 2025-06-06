@@ -5,13 +5,14 @@
 Summary:	Vapoursynth plugin to access audio and video via FFmpeg library
 Summary(pl.UTF-8):	Wtyczka Vapoursynth pozwalająca na dostęp do dźwięku i obrazu poprzez bibliotekę FFmpeg
 Name:		vapoursynth-plugin-bestsource
-Version:	4
+# >= 9 requires ffmpeg 7+
+Version:	8
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/vapoursynth/bestsource/releases
 Source0:	https://github.com/vapoursynth/bestsource/archive/R%{version}/bestsource-R%{version}.tar.gz
-# Source0-md5:	32c350818744d5bc395e6ff90c4070c7
+# Source0-md5:	827740eaa706533f587e154b37d509aa
 Patch0:		bestsource-system-libp2p.patch
 Patch1:		bestsource-system-AviSynthPlus.patch
 URL:		https://github.com/vapoursynth/bestsource
@@ -19,7 +20,7 @@ BuildRequires:	AviSynthPlus-devel
 # libavcodec >= 60.31.0, libavformat >= 60.16.0, libavutil >= 58.29.0
 BuildRequires:	ffmpeg-devel >= 6.0
 BuildRequires:	libp2p-devel >= 0-0.20240415
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	meson >= 0.53.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig

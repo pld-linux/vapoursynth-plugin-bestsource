@@ -1,16 +1,16 @@
---- bestsource-R4/meson.build.orig	2024-05-27 06:22:09.431214749 +0200
-+++ bestsource-R4/meson.build	2024-05-27 06:23:24.504374692 +0200
-@@ -29,38 +29,20 @@ plugin_sources = files(
+--- bestsource-R8/meson.build.orig	2024-10-19 18:00:53.000000000 +0200
++++ bestsource-R8/meson.build	2025-06-06 17:58:52.546182236 +0200
+@@ -29,38 +29,14 @@ plugin_sources = files(
      'src/vapoursynth.cpp',
  )
  
 -libs = []
- p2p_args = []
- 
- if host_machine.cpu_family().startswith('x86')
-     p2p_args += ['-DP2P_SIMD']
- endif
- 
+-p2p_args = []
+-
+-if host_machine.cpu_family().startswith('x86')
+-    p2p_args += ['-DP2P_SIMD']
+-endif
+-
 -libs += static_library('p2p_main',
 -    files(
 -        'libp2p/p2p_api.cpp',
@@ -41,7 +41,7 @@
  ]
  
  link_args = []
-@@ -73,7 +55,6 @@ libbestsource = library('libbestsource',
+@@ -73,7 +49,6 @@ libbestsource = library('libbestsource',
      dependencies: deps,
      install: true,
      link_args: link_args,
@@ -49,11 +49,11 @@
      name_prefix: '',
  )
  
---- bestsource-R4/src/videosource.cpp.orig	2024-05-27 06:22:09.435468064 +0200
-+++ bestsource-R4/src/videosource.cpp	2024-05-27 06:24:13.798307667 +0200
-@@ -25,7 +25,7 @@
- #include <cassert>
+--- bestsource-R12/src/videosource.cpp.orig	2025-05-13 21:43:54.000000000 +0200
++++ bestsource-R12/src/videosource.cpp	2025-06-06 17:49:12.665990383 +0200
+@@ -26,7 +26,7 @@
  #include <iterator>
+ #include <charconv>
  
 -#include "../libp2p/p2p_api.h"
 +#include <p2p_api.h>
