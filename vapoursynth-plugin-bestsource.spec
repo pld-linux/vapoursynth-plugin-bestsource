@@ -78,8 +78,8 @@ Statyczna biblioteka bestsource.
 
 %prep
 %setup -q -n bestsource-R%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %meson build \
