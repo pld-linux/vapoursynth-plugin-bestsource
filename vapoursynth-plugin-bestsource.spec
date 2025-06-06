@@ -23,6 +23,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	meson >= 0.53.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	vapoursynth-devel >= 55
 BuildRequires:	xxHash-devel
 Requires:	bestsource = %{version}-%{release}
@@ -82,15 +83,15 @@ Statyczna biblioteka bestsource.
 %patch -P1 -p1
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
