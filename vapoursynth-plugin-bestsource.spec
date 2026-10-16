@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Wtyczka Vapoursynth pozwalająca na dostęp do dźwięku i ob
 Name:		vapoursynth-plugin-bestsource
 # >= 9 requires ffmpeg 7+
 Version:	8
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/vapoursynth/bestsource/releases
