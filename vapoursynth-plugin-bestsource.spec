@@ -1,23 +1,17 @@
-#
-# Conditional build:
-%bcond_without	static_libs	# static library
-
 Summary:	Vapoursynth plugin to access audio and video via FFmpeg library
 Summary(pl.UTF-8):	Wtyczka Vapoursynth pozwalająca na dostęp do dźwięku i obrazu poprzez bibliotekę FFmpeg
 Name:		vapoursynth-plugin-bestsource
-# >= 9 requires ffmpeg 7+
-Version:	8
-Release:	2
+Version:	23
+Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/vapoursynth/bestsource/releases
 Source0:	https://github.com/vapoursynth/bestsource/archive/R%{version}/bestsource-R%{version}.tar.gz
-# Source0-md5:	827740eaa706533f587e154b37d509aa
+# Source0-md5:	d8078bad01ad4d4bdceb7231f0c87a6d
 Patch0:		bestsource-system-libp2p.patch
 Patch1:		bestsource-system-AviSynthPlus.patch
 URL:		https://github.com/vapoursynth/bestsource
 BuildRequires:	AviSynthPlus-devel
-# libavcodec >= 60.31.0, libavformat >= 60.16.0, libavutil >= 58.29.0
 BuildRequires:	ffmpeg-devel >= 6.0
 BuildRequires:	libp2p-devel >= 0-0.20240415
 BuildRequires:	libstdc++-devel >= 6:7
@@ -30,6 +24,9 @@ BuildRequires:	xxHash-devel
 Requires:	bestsource = %{version}-%{release}
 Requires:	vapoursynth >= 55
 Obsoletes:	vapoursynth-plugin-bestaudiosource < 2
+Obsoletes:	bestsource < 23
+Obsoletes:	bestsource-devel < 23
+Obsoletes:	bestsource-static < 23
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -84,8 +81,7 @@ Statyczna biblioteka bestsource.
 %patch -P1 -p1
 
 %build
-%meson \
-	%{!?with_static_libs:--default-library=shared}
+%meson
 
 %meson_build
 
@@ -99,20 +95,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README.md
-%attr(755,root,root) %{_libdir}/vapoursynth/bestsource.so
-
-%files -n bestsource
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libbestsource.so
-
-%files -n bestsource-devel
-%defattr(644,root,root,755)
-%{_includedir}/bestsource
-%{_pkgconfigdir}/bestsource.pc
-
-%if %{with static_libs}
-%files -n bestsource-static
-%defattr(644,root,root,755)
-%{_libdir}/libbestsource.a
-%endif
+%doc README.md
+%attr(755,root,root) %{py3_sitedir}/vapoursynth/plugins/libbestsource.so

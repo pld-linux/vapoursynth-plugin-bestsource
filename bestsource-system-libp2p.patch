@@ -1,73 +1,11 @@
 --- bestsource-R8/meson.build.orig	2024-10-19 18:00:53.000000000 +0200
 +++ bestsource-R8/meson.build	2025-06-06 17:58:52.546182236 +0200
-@@ -29,38 +29,14 @@ plugin_sources = files(
-     'src/vapoursynth.cpp',
- )
- 
--libs = []
--p2p_args = []
--
--if host_machine.cpu_family().startswith('x86')
--    p2p_args += ['-DP2P_SIMD']
--endif
--
--libs += static_library('p2p_main',
--    files(
--        'libp2p/p2p_api.cpp',
--        'libp2p/v210.cpp',
--        'libp2p/simd/cpuinfo_x86.cpp',
--        'libp2p/simd/p2p_simd.cpp',
--    ),
--    cpp_args: p2p_args,
--    gnu_symbol_visibility: 'hidden',
--)
--
--if host_machine.cpu_family().startswith('x86')
--    p2p_args += ['-msse4.1']
--
--    libs += static_library('p2p_sse41', files('libp2p/simd/p2p_sse41.cpp'),
--        cpp_args: p2p_args,
--        gnu_symbol_visibility: 'hidden',
--    )
--endif
-+p2p_dep = meson.get_compiler('cpp').find_library('p2p')
- 
- deps = [
-     dependency('libavcodec', version: '>=60.31.0'),
-     dependency('libavformat', version: '>=60.16.0'),
-     dependency('libavutil', version: '>=58.29.0'),
+@@ -16,7 +16,7 @@
+     dependency('libavcodec', version: '>=63.1.0'),
+     dependency('libavformat', version: '>=63.1.0'),
+     libavutil_dep,
+-    dependency('libp2p'),
++    meson.get_compiler('cpp').find_library('p2p'),
      dependency('libxxhash'),
-+    p2p_dep,
  ]
- 
- link_args = []
-@@ -73,7 +49,6 @@ libbestsource = library('libbestsource',
-     dependencies: deps,
-     install: true,
-     link_args: link_args,
--    link_with: libs,
-     name_prefix: '',
- )
- 
---- bestsource-R12/src/videosource.cpp.orig	2025-05-13 21:43:54.000000000 +0200
-+++ bestsource-R12/src/videosource.cpp	2025-06-06 17:49:12.665990383 +0200
-@@ -26,7 +26,7 @@
- #include <iterator>
- #include <charconv>
- 
--#include "../libp2p/p2p_api.h"
-+#include <p2p_api.h>
- 
- #include <xxhash.h>
- 
---- bestsource-R4/src/audiosource.cpp.orig	2024-04-25 09:54:57.000000000 +0200
-+++ bestsource-R4/src/audiosource.cpp	2024-05-27 06:28:13.010135677 +0200
-@@ -26,7 +26,7 @@
- #include <cassert>
- #include <iterator>
- 
--#include "../libp2p/p2p_api.h"
-+#include <p2p_api.h>
- 
- #include <xxhash.h>
  

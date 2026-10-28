@@ -1,11 +1,11 @@
---- bestsource-R4/src/avisynth.cpp.orig	2024-04-25 09:54:57.000000000 +0200
-+++ bestsource-R4/src/avisynth.cpp	2024-05-27 21:47:03.609466239 +0200
-@@ -23,7 +23,7 @@
- #include "bsshared.h"
- #include "version.h"
- #include "synthshared.h"
--#include "../AviSynthPlus/avs_core/include/avisynth.h"
-+#include <avisynth/avisynth.h>
- #include <VSHelper4.h>
- #include <vector>
- #include <algorithm>
+--- bestsource-R23/meson.build~	2026-10-28 23:56:12.000000000 +0100
++++ bestsource-R23/meson.build	2026-10-28 23:57:27.166443060 +0100
+@@ -145,7 +145,7 @@
+     # does not match the host AviSynth+ can never be loaded by it. Leave the interface out entirely
+     # in that case instead of exporting an AvisynthPluginInit3 that cannot work.
+     if get_option('enable_avisynth')
+-        deps += dependency('avisynthplus')
++        deps += dependency('avisynth')
+ 
+         sources += files(
+             'src/avisynth.cpp',
