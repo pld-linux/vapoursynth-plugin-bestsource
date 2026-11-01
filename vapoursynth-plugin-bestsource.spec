@@ -2,7 +2,7 @@ Summary:	Vapoursynth plugin to access audio and video via FFmpeg library
 Summary(pl.UTF-8):	Wtyczka Vapoursynth pozwalająca na dostęp do dźwięku i obrazu poprzez bibliotekę FFmpeg
 Name:		vapoursynth-plugin-bestsource
 Version:	23
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/vapoursynth/bestsource/releases
@@ -21,7 +21,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	vapoursynth-devel >= 55
 BuildRequires:	xxHash-devel
-Requires:	bestsource = %{version}-%{release}
 Requires:	vapoursynth >= 55
 Obsoletes:	vapoursynth-plugin-bestaudiosource < 2
 Obsoletes:	bestsource < 23
