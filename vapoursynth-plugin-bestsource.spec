@@ -52,6 +52,7 @@ bibliotekę FFmpeg.
 
 %build
 %meson \
+	--default-library=shared \
 	-Denable_gpu=%{__enabled_disabled vulkan}
 
 %meson_build
